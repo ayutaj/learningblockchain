@@ -1,0 +1,8 @@
+REACT_APP_NAME=Thaala
+REACT_APP_PUBLIC_KEY=TPfZwM1PlHO56..................................qkCGfviYsMg03rk0E0DnW6sdpi
+REACT_APP_PRIVATEKEY=ogIB..............................kgTqac3igvW1cZaG
+REACT_APP_CONTRACT_ADDRESS=0x6Cd...............Ae7d2307D485
+REACT_APP_PINATA_URL=https://api.pinata.cloud/pinning/pinFileToIPFS
+REACT_APP_PINATA_API_KEY=abdght......ghe
+REACT_APP_PINATA_SECRET_API_KEY=d8.......a3ddf2e8734
+REACT_APP_PINATA_GATEWAY=https://gateway.pinata.cloud/ipfs/

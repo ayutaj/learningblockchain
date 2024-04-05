@@ -1,0 +1,44 @@
+/* ImageUpload.css */
+.image-upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.file-input,
+.privacy-options {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 10px;
+  font-size: 18px;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.563);
+  border-radius: 5px;
+  width: 30rem;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.error-message {
+  color: darkslateblue;
+  font-size: 17px;
+}

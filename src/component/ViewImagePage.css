@@ -1,0 +1,91 @@
+.image-container {
+  position: relative;
+  width: 300px;
+  height: 400px;
+  margin: 10px;
+  margin-top: 35px;
+  padding: 10px 10px;
+  box-shadow: 0 15px 35px 12px rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  background-color: black;
+  background-image: linear-gradient(
+    to right,
+    #060610,
+    #08121b,
+    #041b24,
+    #002428,
+    #002c27,
+    #002c21,
+    #042b1b,
+    #092a14,
+    #0c2110,
+    #09190b,
+    #051005,
+    #000100
+  );
+  display: inline-block;
+}
+.grey {
+  background-color: #c1c1c1;
+}
+.grey:hover {
+  background-color: #c1c1c1;
+  cursor: default;
+}
+.image-container img {
+  border-radius: 15px; /* Add border-radius to the image */
+  position: relative;
+  width: 280px;
+  height: 385px;
+  overflow: hidden;
+}
+.image-container img:hover {
+  transform: scale(1.1);
+  transition: 0.4s;
+}
+.image-container:hover {
+  transform: scale(1.09);
+  transition: 0.4s;
+  background: rgba(0, 0, 0, 0.927);
+  cursor: pointer;
+}
+
+.bleh {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+}
+.modal-content {
+  position: relative;
+  width: 70%;
+  height: 70%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.modal-image {
+  max-width: 80%;
+  max-height: 80%;
+  object-fit: contain;
+  margin-bottom: 30px;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 50px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+}
