@@ -5,7 +5,6 @@ import "./ImageUpload.css";
 const ImageUpload = ({ onUpload, setIsSuccessful_prop }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
-  const [privacy, setPrivacy] = useState("public");
 
   const handleFileChange = (event) => {
     setIsSuccessful_prop(0);
@@ -23,7 +22,7 @@ const ImageUpload = ({ onUpload, setIsSuccessful_prop }) => {
 
   const handleUpload = () => {
     if (selectedFile) {
-      onUpload(selectedFile, privacy);
+      onUpload(selectedFile);
       setSelectedFile(null);
     } else {
       setErrorMessage("Please select an image to upload");
@@ -42,26 +41,6 @@ const ImageUpload = ({ onUpload, setIsSuccessful_prop }) => {
       </div>
       <div className="privacy-options">
         <p>Upload image:</p>
-        <label>
-          <input
-            type="radio"
-            name="privacy"
-            value="public"
-            checked={privacy === "public"}
-            onChange={() => setPrivacy("public")}
-          />
-          Public
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="privacy"
-            value="private"
-            checked={privacy === "private"}
-            onChange={() => setPrivacy("private")}
-          />
-          Private
-        </label>
       </div>
       {errorMessage !== "" ? (
         <button onClick={handlemptyfile} className="grey">

@@ -5,50 +5,30 @@ contract ImageStorage {
 
 
     //array to store public and private image ipfshash and encrypted image hash
-    string[] public privateimagearray;
     string[] public publicimagearray;    
-    function add_ipfs_to_array(string memory ipfshash, bool is_private) public {
-        if(is_private==true)
-            privateimagearray.push(ipfshash);
-        else 
-            publicimagearray.push(ipfshash);
+
+    function add_ipfs_to_array(string memory ipfshash) public {
+        publicimagearray.push(ipfshash);
     }
-    function get_array_len(bool is_private) public view returns (uint) {
-        if(is_private==true)
-            return privateimagearray.length;
-        else 
-            return publicimagearray.length;
+
+    function get_array_len() public view returns (uint) {
+        return publicimagearray.length;
     }
-    function get_Array( bool is_private) public view returns (string[] memory) {
-        if(is_private==true)
-            return privateimagearray;
-        else 
-            return publicimagearray;
+    function get_Array() public view returns (string[] memory) {
+        return publicimagearray;
     }
 
 
     //------------------------------------------------------------    
     //map and functions of private and public image
-    mapping(bytes32 => string) private privateimages;
-    mapping(bytes32=> string) private publicimages;
+    mapping(bytes32=> string) public publicimages;
     
-    function uploadImage(bytes32 hash, string memory ipfsHash, bool is_private) public {
-        if(is_private==true)
-        {
-            privateimages[hash] = ipfsHash;
-            add_ipfs_to_array(ipfsHash,true);
-        }
-        else 
-        {   
+    function uploadImage(bytes32 hash, string memory ipfsHash) public {   
             publicimages[hash] = ipfsHash;
-            add_ipfs_to_array(ipfsHash,false);
-        }    
+            add_ipfs_to_array(ipfsHash);
     }
 
-    function getImagebyhash(bytes32 hash,bool is_private) public view returns (string memory) {
-        if(is_private==true)
-            return privateimages[hash];
-        else 
+    function getImagebyhash(bytes32 hash) public view returns (string memory) {
             return publicimages[hash];
     }
 

@@ -3,11 +3,10 @@
 import React, { useState } from "react";
 import Web3 from "web3";
 import axios from "axios";
-import { JSEncrypt } from "jsencrypt";
 
 import ImageUpload from "./ImageUpload";
 import configuration from "./ImageStorage.json";
-import Navbar from "./Navbar";
+
 import "./Uploadpage.css";
 
 let contract;
@@ -35,17 +34,12 @@ window.addEventListener("load", async () => {
 });
 
 const Uploadpage = (props) => {
-  const publicKey = `-----BEGIN PUBLIC KEY-----${process.env.REACT_APP_PUBLIC_KEY}=-----END PUBLIC KEY-----`;
-  const privateKey = `-----BEGIN RSA PRIVATE KEY-----${process.env.REACT_APP_PRIVATEKEY}=-----END RSA PRIVATE KEY-----`;
-
   const [publicImages, setPublicImages] = useState(null);
-  const [privateImages, setPrivateImages] = useState(null);
   const [isSuccessful, setIsSuccessful] = useState(0);
 
-  const handleImageUpload = (image, privacy) => {
+  const handleImageUpload = (image) => {
     // Handle image upload logic here
     console.log("Uploaded image:", image);
-    console.log("Privacy setting:", privacy);
     setIsSuccessful(0);
     const file = image;
     const reader = new FileReader();
@@ -68,61 +62,22 @@ const Uploadpage = (props) => {
       const hash = web3.utils.keccak256(ipfsHash);
       console.log(`hash32byte ${hash}`);
       let encrypted_ipfshashlocal = ipfsHash;
-      let is_private = privacy === "private";
-      if (is_private) {
-        let encrypt = new JSEncrypt();
-        encrypt.setPublicKey(publicKey);
-        encrypted_ipfshashlocal = encrypt.encrypt(ipfsHash);
-      }
-
-      console.log(`encryptd _ipfs hash ${encrypted_ipfshashlocal}`);
       await contract.methods
-        .uploadImage(hash, encrypted_ipfshashlocal, is_private)
+        .uploadImage(hash, encrypted_ipfshashlocal)
         .send({ from: accounts[0] });
       console.log("upload succesful");
       setIsSuccessful(1);
     };
     reader.readAsArrayBuffer(file);
 
-    if (privacy === "public") {
-      setPublicImages(image);
-    } else {
-      setPrivateImages(image);
-    }
+    setPublicImages(image);
   };
 
-  async function show_image(is_private) {
-    let solidityObject = await contract.methods.get_Array(is_private).call();
+  async function show_image() {
+    let solidityObject = await contract.methods.get_Array().call();
     let solidityArray = solidityObject.toString();
     let final_array = solidityArray.split(",");
     console.log(final_array);
-
-    if (is_private) {
-      try {
-        // console.log(`encryptd _ipfs hash ${encrypted_ipfshashlocal}`);
-        let decrypt = new JSEncrypt();
-        let private_arr = [];
-        decrypt.setPrivateKey(privateKey);
-        console.log("happy");
-        for (let i = final_array.length - 1; i > -1; i = i - 1) {
-          try {
-            let decrypted_ipfshashlocal = decrypt.decrypt(final_array[i]);
-            console.log(`decyphered result ${decrypted_ipfshashlocal}`);
-            console.log("new year");
-            if (decrypted_ipfshashlocal !== null) {
-              private_arr.push(decrypted_ipfshashlocal);
-            }
-          } catch (e) {
-            console.log(e);
-          }
-        }
-        final_array.length = 0;
-        final_array = [...private_arr];
-      } catch (e) {
-        console.log(e);
-        console.log("error in retrieveing the IPFS hash");
-      }
-    }
 
     for (let i = 0; i < final_array.length; i = i + 1) {
       final_array[
@@ -135,28 +90,10 @@ const Uploadpage = (props) => {
     console.log("array string");
     console.log(props.ImageArraystring_prop);
     props.setisViewimage_prop(1);
-    // console.log(props);
-  }
-
-  async function addUser() {
-    const account_to_be_added = prompt("Enter the users account key");
-    try {
-      const accounts = await web3.eth.getAccounts();
-      await contract.methods
-        .add_user(account_to_be_added)
-        .send({ from: accounts[0] });
-      console.log("upload succesful");
-      alert("Account added succesfully");
-    } catch (e) {
-      console.log(e);
-      alert("Could not add account");
-    }
-    console.log(account_to_be_added);
   }
 
   return (
     <>
-      <Navbar addUser_prop={addUser}></Navbar>
       <div className="upload-page-container">
         <h2>Upload Image</h2>
         <ImageUpload
@@ -175,18 +112,10 @@ const Uploadpage = (props) => {
           <button
             className="view-button"
             onClick={() => {
-              show_image(false);
+              show_image();
             }}
           >
-            View Public Images
-          </button>
-          <button
-            className="view-button"
-            onClick={() => {
-              show_image(true);
-            }}
-          >
-            View Private Images
+            View Images
           </button>
         </div>
       </div>

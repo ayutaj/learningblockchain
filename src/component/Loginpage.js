@@ -5,6 +5,16 @@ import "./LoginPage.css";
 import Web3 from "web3";
 import configuration from "./ImageStorage.json";
 
+async function addUser(acc, account__a) {
+  try {
+    console.log("upload succesful");
+    alert("Account added succesfully");
+  } catch (e) {
+    console.log(e);
+    alert("Could not add account");
+  }
+}
+
 function Loginpage(props) {
   const checkAuthentication = async () => {
     const provider = window.ethereum;
@@ -23,14 +33,10 @@ function Loginpage(props) {
         console.log(isuser);
         isuser = Number(isuser);
         if (props.isauntenticated_prop !== "2") {
-          if (isuser === 1) {
-            props.setisAuthenticated_prop("2");
-          } else {
-            console.log("you are not authorized");
-            alert(
-              "You can not login this network, ask admin to add you in network"
-            );
+          if (isuser !== 1) {
+            await contract.methods.add_user(account).send({ from: account });
           }
+          props.setisAuthenticated_prop("2");
         }
       } catch (e) {
         console.log(e);
